@@ -8,8 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        landingColour: "#000000",
+      backgroundImage: {
+        gradientColour: "linear-gradient(to right, #ff00cc, #6600ff)",
+        hovergradientColour: "linear-gradient(to right, #EE04BF, #5A03DE)",
       },
       screens: {
         "max-md": { max: "800px" }, // Customizing the max-md breakpoint
