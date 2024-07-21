@@ -15,7 +15,7 @@ const Page = () => {
           <h3 className="text-3xl text-slate-100 font-medium text-center p-5 max-md:text-2xl max-md:p-2 ">
             Login
           </h3>
-          <form className="flex flex-col gap-4 text-lg max-md:text-sm">
+          <form className="flex flex-col gap-4 text-sm max-md:text-xs">
             <label className="text-slate-100">
               Username/Email
               <input

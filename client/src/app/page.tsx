@@ -5,11 +5,11 @@ import "./globals.css"; // Import the global CSS file
 export default function App() {
   return (
     <>
-      <main className="bg-black h-screen w-full flex flex-col overflow-hidden">
+      <main className="bg-black h-screen w-full flex flex-col overflow-hidden ">
         <Nav />
         <div className="flex  flex-col md:flex-row justify-between items-center p-10 ">
           <section className="text-center md:text-left md:w-1/2 flex flex-col gap-6">
-            <h3 className="text-6xl font-bold mb-4 text-gradient-pink-violet max-md:text-4xl">
+            <h3 className="text-6xl font-black  mb-4 text-gradient-pink-violet max-md:text-4xl">
               STAY CONNECTED, ANYTIME, ANYWHERE
             </h3>
             <h5 className="text-2xl text-slate-300 max-md:text-lg max-w-80:text-sm">

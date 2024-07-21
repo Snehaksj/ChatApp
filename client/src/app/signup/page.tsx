@@ -7,7 +7,7 @@ const Page = () => {
       <Nav />
       <div className="flex h-30 w-30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 justify-center items-center m-2">
         <div
-          className=" bg-black bg-opacity-55 p-10 rounded-xl max-md:px-[70px] flex flex-col gap-5 "
+          className=" bg-black bg-opacity-55 p-10 rounded-xl max-md:px-[20px] flex flex-col gap-5 w-[400px] max-md:w-[300px]"
           style={{
             filter: "drop-shadow(0 0 70px rgb(186, 36, 223))",
           }}
