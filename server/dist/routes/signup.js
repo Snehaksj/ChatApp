@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const user_1 = __importDefault(require("../model/user"));
 const userExists_1 = __importDefault(require("../middlewares/userExists"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const crypto_1 = __importDefault(require("crypto"));
 const router = express_1.default.Router();
 router.post("/", userExists_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password } = req.body;
@@ -47,7 +48,12 @@ router.post("/", userExists_1.default, (req, res) => __awaiter(void 0, void 0, v
     }
     try {
         const hashedPassword = yield bcryptjs_1.default.hash(password, 10);
-        const newUser = new user_1.default({ username, email, password: hashedPassword });
+        const newUser = new user_1.default({
+            username,
+            email,
+            password: hashedPassword,
+            emailToken: crypto_1.default.randomBytes(64).toString("hex"),
+        });
         yield newUser.save();
         res.status(201).json({ message: "New user created!" });
     }

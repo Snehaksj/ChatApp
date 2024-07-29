@@ -4,28 +4,26 @@ interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  isVerified: boolean;
 }
 
-const UserSchema: Schema<IUser> = new Schema({
-  username: {
-    type: String,
-    required: [true, "Username required"],
-    unique: true,
+const UserSchema: Schema<IUser> = new Schema(
+  {
+    username: {
+      type: String,
+      required: [true, "Username required"],
+      unique: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email required"],
+    },
+    password: {
+      type: String,
+      required: [true, "Password required"],
+    },
   },
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "Email required"],
-  },
-  password: {
-    type: String,
-    required: [true, "Password required"],
-  },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-});
+  { timestamps: true }
+);
 
 export default mongoose.model<IUser>("User", UserSchema);

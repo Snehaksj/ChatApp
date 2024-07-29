@@ -3,6 +3,7 @@ import React from "react";
 import Nav from "../components/Nav";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 const Page = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ const Page = () => {
     emailMsg: "",
     passwordMsg: "",
   });
+  const router = useRouter();
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -22,6 +24,7 @@ const Page = () => {
       });
       console.log("done!");
       setErrorMessages({ usernameMsg: "", emailMsg: "", passwordMsg: "" });
+      router.push("/home");
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.error) {
         setErrorMessages(error.response.data.error);

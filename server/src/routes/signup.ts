@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import User from "../model/user";
 import userExists from "../middlewares/userExists";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 const router = express.Router();
 
 router.post("/", userExists, async (req: Request, res: Response) => {
@@ -35,7 +36,12 @@ router.post("/", userExists, async (req: Request, res: Response) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      emailToken: crypto.randomBytes(64).toString("hex"),
+    });
     await newUser.save();
     res.status(201).json({ message: "New user created!" });
   } catch (error) {
@@ -43,5 +49,4 @@ router.post("/", userExists, async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 export default router;

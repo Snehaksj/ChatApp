@@ -1,7 +1,34 @@
+"use client";
 import React from "react";
 import Nav from "../components/Nav";
-
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 const Page = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessages, setErrorMessages] = useState({
+    usernameMsg: "",
+    passwordMsg: "",
+  });
+  const router = useRouter();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:5000/login/", {
+        username,
+        password,
+      });
+      console.log("done!");
+      setErrorMessages({ usernameMsg: "", passwordMsg: "" });
+      router.push("/home");
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setErrorMessages(error.response.data.error);
+        console.log(error.response.data.error);
+      }
+    }
+  };
   return (
     <main className="bg-black h-screen w-full flex flex-col overflow-hidden">
       <Nav />
@@ -15,21 +42,34 @@ const Page = () => {
           <h3 className="text-3xl text-slate-100 font-medium text-center p-5 max-md:text-2xl max-md:p-2 ">
             Login
           </h3>
-          <form className="flex flex-col gap-4 text-sm max-md:text-xs">
+          <form
+            className="flex flex-col gap-4 text-sm max-md:text-xs"
+            onSubmit={handleLogin}
+          >
             <label className="text-slate-100">
               Username/Email
               <input
                 type="text"
                 className="mt-1 p-2 border border-slate-400 bg-black opacity-55 rounded-md w-full"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </label>
+            {errorMessages.usernameMsg && (
+              <p className="text-red-500">{errorMessages.usernameMsg}</p>
+            )}
             <label className="text-slate-100">
               Password
               <input
                 type="password"
                 className="mt-1 p-2 border border-gray-400 bg-black opacity-55 rounded-md w-full"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </label>
+            {errorMessages.passwordMsg && (
+              <p className="text-red-500">{errorMessages.passwordMsg}</p>
+            )}
             <button
               type="submit"
               className="mt-4 mb-2 mx-auto w-1/2 justify-center items-center text-white p-2 rounded-2xl bg-gradientColour hover:bg-hovergradientColour"

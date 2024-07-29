@@ -12,27 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
 const user_1 = __importDefault(require("../model/user"));
-const userExists = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const email = req.body.email;
-    const name = req.body.username;
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const router = express_1.default.Router();
+router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { username, password } = req.body;
     try {
-        const userEmail = yield user_1.default.findOne({ email });
-        const username = yield user_1.default.findOne({ username: name });
-        if (userEmail) {
+        const user = yield user_1.default.findOne({
+            $or: [{ email: username }, { username: username }],
+        });
+        if (!user) {
             return res
                 .status(400)
-                .json({ error: { emailMsg: "Email already exists" } });
+                .json({ error: { usernameMsg: "Invalid username" } });
         }
-        if (username) {
+        const isMatch = yield bcryptjs_1.default.compare(password, user.password);
+        if (!isMatch) {
             return res
                 .status(400)
-                .json({ error: { usernameMsg: "Username already exists" } });
+                .json({ error: { passwordMsg: "Invalid password" } });
         }
-        next();
+        res.status(200).json({ message: "Login successful" });
     }
     catch (error) {
+        console.error("Error logging in:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-});
-exports.default = userExists;
+}));
+exports.default = router;
