@@ -9,15 +9,34 @@ const login_1 = __importDefault(require("./routes/login"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const connect_1 = __importDefault(require("./lib/connect"));
 const cors_1 = __importDefault(require("cors"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const logout_1 = __importDefault(require("./routes/logout"));
+const authMiddleware_1 = __importDefault(require("./middlewares/authMiddleware"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
 (0, connect_1.default)(MONGODB_URI);
-app.use((0, cors_1.default)());
+const FRONTEND_URL = process.env.FRONTEND_URL;
+app.use((0, cors_1.default)({
+    origin: FRONTEND_URL,
+    credentials: true,
+}));
+app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
+app.use((req, res, next) => {
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.set("Pragma", "no-cache");
+    res.set("Expires", "0");
+    res.set("Surrogate-Control", "no-store");
+    next();
+});
 app.use("/signup", signup_1.default);
 app.use("/login", login_1.default);
+app.use("/logout", logout_1.default);
+app.get("/protected", authMiddleware_1.default, (req, res) => {
+    res.json({ message: "This is a protected route" });
+});
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

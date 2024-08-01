@@ -4,6 +4,7 @@ import Nav from "../components/Nav";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 const Page = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ const Page = () => {
       });
       console.log("done!");
       setErrorMessages({ usernameMsg: "", emailMsg: "", passwordMsg: "" });
-      router.push("/home");
+      router.push("/login");
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.error) {
         setErrorMessages(error.response.data.error);
@@ -92,6 +93,12 @@ const Page = () => {
               Submit
             </button>
           </form>
+          <p className="text-slate-300 text-center text-sm">
+            Already have an account?&nbsp;
+            <Link href="/login" className="text-[#ff00cc]">
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </main>

@@ -4,6 +4,7 @@ import Nav from "../components/Nav";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 const Page = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,10 +16,16 @@ const Page = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/login/", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/login/",
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log("done!");
       setErrorMessages({ usernameMsg: "", passwordMsg: "" });
       router.push("/home");
@@ -77,6 +84,12 @@ const Page = () => {
               Submit
             </button>
           </form>
+          <p className="text-slate-300 text-center text-sm">
+            Dont have an account?&nbsp;
+            <Link href="/signup" className="text-[#ff00cc]">
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
     </main>

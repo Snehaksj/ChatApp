@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const user_1 = __importDefault(require("../model/user"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+// import "dotenv/config.js";
+const JWT_SECRET = process.env.JWT_SECRET;
 const router = express_1.default.Router();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
@@ -33,6 +36,14 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 .status(400)
                 .json({ error: { passwordMsg: "Invalid password" } });
         }
+        const token = jsonwebtoken_1.default.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+        });
+        res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: 3600000,
+            sameSite: "strict",
+        });
         res.status(200).json({ message: "Login successful" });
     }
     catch (error) {

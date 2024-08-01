@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
+        backgroundgradientColour: "liner-gradient(to bottom,#000000,#923CB5)",
         gradientColour: "linear-gradient(to right, #ff00cc, #6600ff)",
         hovergradientColour: "linear-gradient(to right, #EE04BF, #5A03DE)",
       },

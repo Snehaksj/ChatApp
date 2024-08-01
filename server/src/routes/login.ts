@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
 import User from "../model/user";
 import bcrypt from "bcryptjs";
-
+import jwt from "jsonwebtoken";
+// import "dotenv/config.js";
+const JWT_SECRET = process.env.JWT_SECRET;
 const router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
@@ -24,6 +26,18 @@ router.post("/", async (req: Request, res: Response) => {
         .status(400)
         .json({ error: { passwordMsg: "Invalid password" } });
     }
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 3600000,
+      sameSite: "strict",
+    });
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
     console.error("Error logging in:", error);
