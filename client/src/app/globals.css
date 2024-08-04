@@ -7,4 +7,21 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+  .backgroundGradient {
+    background: linear-gradient(
+      90deg,
+      rgba(81, 17, 57, 1) 0%,
+      rgba(15, 4, 41, 1) 30%,
+      rgba(7, 2, 28, 1) 43%,
+      rgba(0, 3, 6, 1) 53%
+    );
+  }
+  .backgroundGradient2 {
+    background: linear-gradient(
+      180deg,
+      rgba(81, 17, 57, 1) 0%,
+      rgba(15, 4, 41, 1) 30%,
+      rgba(0, 3, 6, 1) 50%
+    );
+  }
 }

@@ -12,8 +12,10 @@ const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const logout_1 = __importDefault(require("./routes/logout"));
 const authMiddleware_1 = __importDefault(require("./middlewares/authMiddleware"));
+const http_1 = __importDefault(require("http"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+const server = http_1.default.createServer(app);
 const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
 (0, connect_1.default)(MONGODB_URI);
@@ -37,6 +39,6 @@ app.use("/logout", logout_1.default);
 app.get("/protected", authMiddleware_1.default, (req, res) => {
     res.json({ message: "This is a protected route" });
 });
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

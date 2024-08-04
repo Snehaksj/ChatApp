@@ -7,10 +7,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import logoutRoute from "./routes/logout";
 import authMiddleware from "./middlewares/authMiddleware";
+import http from "http";
 
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+
 const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -40,6 +43,6 @@ app.use("/logout", logoutRoute);
 app.get("/protected", authMiddleware, (req, res) => {
   res.json({ message: "This is a protected route" });
 });
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

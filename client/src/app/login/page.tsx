@@ -12,7 +12,11 @@ const Page = () => {
     usernameMsg: "",
     passwordMsg: "",
   });
+  const [showPassword, setshowPassword] = useState(false);
   const router = useRouter();
+  const togglePassword = () => {
+    setshowPassword(!showPassword);
+  };
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -65,14 +69,25 @@ const Page = () => {
             {errorMessages.usernameMsg && (
               <p className="text-red-500">{errorMessages.usernameMsg}</p>
             )}
-            <label className="text-slate-100">
+            <label className="text-slate-100 relative">
               Password
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="mt-1 p-2 border border-gray-400 bg-black opacity-55 rounded-md w-full"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <span
+                className="absolute right-3 top-9 cursor-pointer max-md:top-7"
+                onClick={togglePassword}
+              >
+                <img
+                  src={showPassword ? "/visible.svg" : "/invisible.svg"}
+                  alt="Toggle visibility"
+                  width={20}
+                  height={20}
+                />
+              </span>
             </label>
             {errorMessages.passwordMsg && (
               <p className="text-red-500">{errorMessages.passwordMsg}</p>

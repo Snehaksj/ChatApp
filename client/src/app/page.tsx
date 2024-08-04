@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Nav from "./components/Nav";
-import "./globals.css"; // Import the global CSS file
+import "./globals.css";
 
 export default function App() {
   return (
     <>
-      <main className="bg-black h-screen w-full flex flex-col overflow-hidden ">
+      <main className="max-md:backgroundGradient2  md:backgroundGradient h-screen w-full flex flex-col overflow-hidden ">
         <Nav />
-        <div className="flex  flex-col md:flex-row justify-between items-center p-10 ">
+        <div className="flex  flex-col md:flex-row justify-between items-center p-10 md:mt-[3.5rem]">
           <section className="text-center md:text-left md:w-1/2 flex flex-col gap-6">
             <h3 className="text-6xl font-black  mb-4 text-gradient-pink-violet max-md:text-4xl">
               STAY CONNECTED, ANYTIME, ANYWHERE
