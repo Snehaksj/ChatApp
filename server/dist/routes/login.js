@@ -36,13 +36,19 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 .status(400)
                 .json({ error: { passwordMsg: "Invalid password" } });
         }
-        const token = jsonwebtoken_1.default.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, {
-            expiresIn: "1h",
+        const accessToken = jsonwebtoken_1.default.sign({ id: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "15m",
         });
-        res.cookie("token", token, {
+        const refreshToken = jsonwebtoken_1.default.sign({ id: user._id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "7d" });
+        res.cookie("accessToken", accessToken, {
             httpOnly: true,
-            maxAge: 3600000,
             sameSite: "strict",
+            secure: true,
+        });
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            sameSite: "strict",
+            secure: true,
         });
         res.status(200).json({ message: "Login successful" });
     }

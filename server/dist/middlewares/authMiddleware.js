@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require("dotenv/config");
 const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.cookies.token;
+    const token = req.cookies.accessToken;
     if (!token) {
         return res.status(401).json({ message: "Access Denied" });
     }

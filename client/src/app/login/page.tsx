@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import axiosInstance from "../Token/axiosInstance";
 const Page = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +21,7 @@ const Page = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:5000/login/",
         {
           username,

@@ -12,7 +12,7 @@ export default function App() {
             <h3 className="text-6xl font-black  mb-4 text-gradient-pink-violet max-md:text-4xl">
               STAY CONNECTED, ANYTIME, ANYWHERE
             </h3>
-            <h5 className="text-2xl text-slate-300 max-md:text-lg max-w-80:text-sm">
+            <h5 className="text-xl text-slate-300 max-md:text-sm max-w-80:text-sm">
               Real-time Messaging with Friends and Family.
               <br />
               What are you waiting for? Start chatting now &rarr;

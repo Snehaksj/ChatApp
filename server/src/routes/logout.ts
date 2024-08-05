@@ -2,7 +2,11 @@ import express from "express";
 const router = express.Router();
 
 router.post("/", (req, res) => {
-  res.clearCookie("token", {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    sameSite: "strict",
+  });
+  res.clearCookie("refreshToken", {
     httpOnly: true,
     sameSite: "strict",
   });

@@ -6,7 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 router.post("/", (req, res) => {
-    res.clearCookie("token", {
+    res.clearCookie("accessToken", {
+        httpOnly: true,
+        sameSite: "strict",
+    });
+    res.clearCookie("refreshToken", {
         httpOnly: true,
         sameSite: "strict",
     });

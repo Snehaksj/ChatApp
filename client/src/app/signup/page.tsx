@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import axiosInstance from "../Token/axiosInstance";
 
 const Page = () => {
   const [username, setUsername] = useState("");
@@ -23,11 +24,14 @@ const Page = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/signup/", {
-        username,
-        email,
-        password,
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:5000/signup/",
+        {
+          username,
+          email,
+          password,
+        }
+      );
       console.log("done!");
       setErrorMessages({ usernameMsg: "", emailMsg: "", passwordMsg: "" });
       router.push("/login");

@@ -26,17 +26,24 @@ router.post("/", async (req: Request, res: Response) => {
         .status(400)
         .json({ error: { passwordMsg: "Invalid password" } });
     }
-    const token = jwt.sign(
-      { id: user._id, username: user.username },
-      process.env.JWT_SECRET!,
-      {
-        expiresIn: "1h",
-      }
+    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, {
+      expiresIn: "15m",
+    });
+    const refreshToken = jwt.sign(
+      { id: user._id },
+      process.env.REFRESH_TOKEN_SECRET!,
+      { expiresIn: "7d" }
     );
-    res.cookie("token", token, {
+
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      maxAge: 3600000,
       sameSite: "strict",
+      secure: true,
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
     });
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
