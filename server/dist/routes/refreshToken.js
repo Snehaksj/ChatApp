@@ -14,7 +14,12 @@ router.post("/", (req, res) => {
     try {
         const verified = jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
         const accessToken = jsonwebtoken_1.default.sign({ id: verified.id }, process.env.JWT_SECRET, { expiresIn: "15m" });
-        res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 15 * 60 * 1000,
+        });
         res.json({ accessToken });
     }
     catch (error) {

@@ -1,25 +1,27 @@
+// withAuth.tsx
 "use client";
-import { useEffect, ComponentType } from "react";
+import { ComponentType } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
 
-const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
+const withAuth = <P extends object>(
+  WrappedComponent: ComponentType<P>
+): ComponentType<P> => {
   const AuthComponent = (props: P) => {
     const router = useRouter();
+    const { isAuthenticated, loading } = useAuth();
 
-    useEffect(() => {
-      const checkAuth = async () => {
-        try {
-          await axios.get("http://localhost:5000/protected", {
-            withCredentials: true,
-          });
-        } catch (error) {
-          router.push("/");
-        }
-      };
+    if (loading)
+      return (
+        <div className="h-screen w-full bg-black flex items-center justify-center ">
+          <h3 className="text-xl text-white">Loading...</h3>
+        </div>
+      );
 
-      checkAuth();
-    }, [router]);
+    if (!isAuthenticated) {
+      router.push("/login");
+      return null;
+    }
 
     return <WrappedComponent {...props} />;
   };

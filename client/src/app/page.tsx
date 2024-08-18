@@ -7,9 +7,9 @@ export default function App() {
     <>
       <main className="max-md:backgroundGradient2  md:backgroundGradient h-screen w-full flex flex-col overflow-hidden ">
         <Nav />
-        <div className="flex  flex-col md:flex-row justify-between items-center p-10 md:mt-[3.5rem]">
+        <div className="flex  max-md:flex-col md:flex-row justify-between items-center p-10 ">
           <section className="text-center md:text-left md:w-1/2 flex flex-col gap-6">
-            <h3 className="text-6xl font-black  mb-4 text-gradient-pink-violet max-md:text-4xl">
+            <h3 className="text-6xl font-black  mb-4 text-gradient-pink-violet max-md:text-4xl md:mt-[3rem]">
               STAY CONNECTED, ANYTIME, ANYWHERE
             </h3>
             <h5 className="text-xl text-slate-300 max-md:text-sm max-w-80:text-sm">
@@ -18,7 +18,7 @@ export default function App() {
               What are you waiting for? Start chatting now &rarr;
             </h5>
           </section>
-          <section className="mt-10 md:mt-0 md:w-1/2 flex justify-center ">
+          <section className="mt-10  md:w-1/2 flex justify-center md:mt-[3rem]">
             <div
               style={{
                 filter: "drop-shadow(0 0 70px rgb(64, 4, 143))",

@@ -18,7 +18,12 @@ router.post("/", (req, res) => {
       { expiresIn: "15m" }
     );
 
-    res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
     res.json({ accessToken });
   } catch (error) {
     res.status(401).json({ message: "Invalid or expired refresh token" });

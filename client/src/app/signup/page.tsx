@@ -1,11 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../components/Nav";
-import { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../util/axiosInstance";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import axiosInstance from "../../util/axiosInstance";
 
 const Page = () => {
   const [username, setUsername] = useState("");
@@ -18,9 +16,11 @@ const Page = () => {
   });
   const [showPassword, setshowPassword] = useState(false);
   const router = useRouter();
+
   const togglePassword = () => {
     setshowPassword(!showPassword);
   };
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -42,21 +42,22 @@ const Page = () => {
       }
     }
   };
+
   return (
     <main className="bg-black h-screen w-full flex flex-col overflow-hidden">
       <Nav />
-      <div className="flex h-30 w-30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 justify-center items-center m-2">
+      <div className="flex h-full justify-center items-center">
         <div
-          className=" bg-black bg-opacity-55 p-10 rounded-xl max-md:px-[20px] flex flex-col gap-5 w-[400px] max-md:w-[300px]"
+          className="bg-black bg-opacity-55 p-10 rounded-xl flex flex-col gap-5 max-w-md w-full mx-4"
           style={{
             filter: "drop-shadow(0 0 70px rgb(186, 36, 223))",
           }}
         >
-          <h3 className="text-3xl text-slate-100 font-medium text-center p-5 max-md:text-2xl max-md:p-2 ">
+          <h3 className="text-3xl text-slate-100 font-medium text-center p-5 max-md:text-2xl max-md:p-2">
             Signup
           </h3>
           <form
-            className="flex flex-col gap-4 text-sm max-md:text-xs "
+            className="flex flex-col gap-4 text-sm max-md:text-xs"
             onSubmit={handleSignup}
           >
             <label className="text-slate-100">
